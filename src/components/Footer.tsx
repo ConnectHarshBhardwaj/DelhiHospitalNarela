@@ -1,4 +1,5 @@
 import { HeartPulse, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
@@ -26,11 +27,11 @@ export const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#home" className="hover:text-teal-500 transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-teal-500 transition-colors">About Doctor</a></li>
-              <li><a href="#services" className="hover:text-teal-500 transition-colors">Services</a></li>
-              <li><a href="#gallery" className="hover:text-teal-500 transition-colors">Gallery</a></li>
-              <li><a href="#contact" className="hover:text-teal-500 transition-colors">Contact Us</a></li>
+              <li><Link to="/" className="hover:text-teal-500 transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-teal-500 transition-colors">About Doctor</Link></li>
+              <li><Link to="/services" className="hover:text-teal-500 transition-colors">Services</Link></li>
+              <li><Link to="/gallery" className="hover:text-teal-500 transition-colors">Gallery</Link></li>
+              <li><Link to="/contact" className="hover:text-teal-500 transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 

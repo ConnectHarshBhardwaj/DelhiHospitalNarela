@@ -4,20 +4,23 @@ import {
   MapPin, 
   Menu, 
   X, 
-  Baby, 
-  Stethoscope, 
-  HeartPulse, 
-  Activity, 
-  Calendar, 
-  ShieldCheck, 
-  UserCheck, 
-  Star 
+  HeartPulse
 } from 'lucide-react';
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About Doctor', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'Gallery', path: '/gallery' },
+  ];
 
   return (
     <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
@@ -38,7 +41,7 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
               <div className="bg-teal-50 p-2.5 rounded-xl border border-teal-100">
                 <HeartPulse className="h-7 w-7 text-teal-600" />
               </div>
@@ -46,17 +49,25 @@ export const Navbar = () => {
                 <h1 className="text-2xl font-bold text-gray-900 leading-none tracking-tight">Dr. Sachin</h1>
                 <p className="text-xs text-teal-600 font-semibold tracking-wide uppercase mt-0.5">Maternity & Gynecology</p>
               </div>
-            </div>
+            </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-gray-600 hover:text-teal-600 font-medium transition-colors text-sm uppercase tracking-wide">Home</a>
-            <a href="#about" className="text-gray-600 hover:text-teal-600 font-medium transition-colors text-sm uppercase tracking-wide">About Doctor</a>
-            <a href="#services" className="text-gray-600 hover:text-teal-600 font-medium transition-colors text-sm uppercase tracking-wide">Services</a>
-            <a href="#gallery" className="text-gray-600 hover:text-teal-600 font-medium transition-colors text-sm uppercase tracking-wide">Gallery</a>
-            <a href="#contact" className="bg-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name}
+                to={link.path} 
+                className={`font-medium transition-colors text-sm uppercase tracking-wide ${isActive(link.path) ? 'text-teal-600' : 'text-gray-600 hover:text-teal-600'}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link 
+              to="/contact" 
+              className="bg-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
               Book Appointment
-            </a>
+            </Link>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -71,11 +82,23 @@ export const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#home" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-600 hover:text-teal-600 hover:bg-teal-50 rounded-md font-medium">Home</a>
-            <a href="#about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-600 hover:text-teal-600 hover:bg-teal-50 rounded-md font-medium">About Doctor</a>
-            <a href="#services" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-600 hover:text-teal-600 hover:bg-teal-50 rounded-md font-medium">Services</a>
-            <a href="#gallery" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-600 hover:text-teal-600 hover:bg-teal-50 rounded-md font-medium">Gallery</a>
-            <a href="#contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-teal-600 font-bold">Book Appointment</a>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name}
+                to={link.path} 
+                onClick={() => setIsOpen(false)} 
+                className={`block px-3 py-2 rounded-md font-medium ${isActive(link.path) ? 'text-teal-600 bg-teal-50' : 'text-gray-600 hover:text-teal-600 hover:bg-teal-50'}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link 
+              to="/contact" 
+              onClick={() => setIsOpen(false)} 
+              className="block px-3 py-2 text-teal-600 font-bold"
+            >
+              Book Appointment
+            </Link>
           </div>
         </div>
       )}
